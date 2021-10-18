@@ -19,6 +19,7 @@ namespace CodeGuesser
         public static string FileLocation;
         public static int Timeout = 700;
         
+        //TODO: Cleanup
         public enum LogType
         {
             Message,
