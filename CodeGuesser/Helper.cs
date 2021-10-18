@@ -15,6 +15,9 @@ namespace CodeGuesser
         
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        public static string FileLocation;
+        public static int Timeout = 700;
         
         public enum LogType
         {
@@ -23,6 +26,16 @@ namespace CodeGuesser
             Warning,
             Info
         }
+        
+        public static readonly Thread StartProcess = new Thread(() =>
+        {
+            if (string.IsNullOrEmpty(FileLocation)) { Log("Invalid file location", LogType.Error); };
+            Helper.SetForegroundWindow(Helper.GetWindow("notepad"));
+            foreach (var character in LoadFile(FileLocation).SelectMany(code => code))
+            {
+                SendInput(Helper.GetWindow("notepad"), Convert.ToByte(character), Timeout);
+            }
+        });
         
         public static void Startup()
         {
@@ -40,7 +53,7 @@ namespace CodeGuesser
         public static IEnumerable<string> LoadFile(string fileLocation)
         {
             // False:True
-            return string.IsNullOrEmpty(fileLocation) ? throw new Exception("Could not find file") : File.ReadAllLines(fileLocation).ToList();
+            return string.IsNullOrEmpty(fileLocation) ? throw new Exception("Couldn't find file") : File.ReadAllLines(fileLocation).ToList();
         }
 
         public static IntPtr GetWindow(string procName)
@@ -83,6 +96,5 @@ namespace CodeGuesser
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
-        
     }
 }
