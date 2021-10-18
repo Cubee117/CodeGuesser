@@ -18,12 +18,12 @@ namespace CodeGuesser
         
         public static void Startup()
         {
-            const string banner = @"
+            var banner = @"
    ___         _                                    
   / __|___  __| |___   __ _ _  _ ___ ______ ___ _ _ 
  | (__/ _ \/ _` / -_) / _` | || / -_|_-<_-</ -_) '_|
   \___\___/\__,_\___| \__, |\_,_\___/__/__/\___|_|  
-                      |___/";
+                      |___/" + Environment.NewLine;
             Console.Title = "Rust code guesser - Cube#9709";
             Console.WriteLine(banner);
         }
@@ -42,7 +42,6 @@ namespace CodeGuesser
         
         public static void SendInput(IntPtr window, byte key, int timeout = 100)
         {
-            SetForegroundWindow(window);
             Thread.Sleep(timeout);
             keybd_event(key, 0, 0, IntPtr.Zero);
             keybd_event(key, 0, 0x0002, IntPtr.Zero);
