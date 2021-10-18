@@ -26,7 +26,7 @@ namespace CodeGuesser
             }
             else
             {
-                // command not found...
+                Console.WriteLine("Command not found!");
             }
         }
     }
