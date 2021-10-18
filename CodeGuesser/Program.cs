@@ -25,12 +25,15 @@ namespace CodeGuesser
             { 
                 Console.Write("{0}@codeguesser:~$ ", Environment.UserName);
                 var input = Console.ReadLine();
-                var data = Helper.LoadFile(input);
-                Helper.SetForegroundWindow(Helper.GetWindow("RustClient"));
+                // var data = Helper.LoadFile(FilePath);
+                // Helper.SetForegroundWindow(Helper.GetWindow("RustClient"));
+                /*
                 foreach (var character in Helper.LoadFile(args[0]).SelectMany(code => code))
                 {
                     Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
                 }
+                */
+                Handler.Process(input);
             }
         }
         
