@@ -6,8 +6,17 @@ namespace CodeGuesser
     {
         public static void Main(string[] args)
         {
-            Console.Write("{0}@codeguesser:~$ ", Environment.UserName);
-            var fileLocation = Console.ReadLine();
+            Helper.Startup();
+            while (true)
+            { 
+                Console.Write("{0}@codeguesser:~$ ", Environment.UserName);
+                var input = Console.ReadLine();
+                var data = Helper.LoadFile(input);
+                foreach (var code in data)
+                {
+                    Console.WriteLine(code);
+                }
+            }
         }
     }
 }
