@@ -16,6 +16,14 @@ namespace CodeGuesser
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
         
+        public enum LogType
+        {
+            Message,
+            Error,
+            Warning,
+            Info
+        }
+        
         public static void Startup()
         {
             var banner = @"
@@ -46,6 +54,34 @@ namespace CodeGuesser
             Thread.Sleep(timeout);
             keybd_event(key, 0, 0, IntPtr.Zero);
             keybd_event(key, 0, 0x0002, IntPtr.Zero);
+        }
+
+        public static void Log(string text, LogType type = LogType.Message)
+        {
+            switch (type)
+            {
+                case LogType.Message:
+                    Console.ResetColor();
+                    Console.WriteLine(text);
+                    break;
+                case LogType.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(text);
+                    Console.ResetColor();
+                    break;
+                case LogType.Warning:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(text);
+                    Console.ResetColor();
+                    break;
+                case LogType.Info:
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(text);
+                    Console.ResetColor();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
         
     }
