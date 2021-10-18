@@ -14,7 +14,7 @@ namespace CodeGuesser
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
         
         [DllImport("user32.dll")]
-        static extern bool SetForegroundWindow(IntPtr hWnd);
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
         
         public static void Startup()
         {
@@ -39,7 +39,7 @@ namespace CodeGuesser
             var proc = Process.GetProcessesByName(procName);
             return proc.Length == 0 ? throw new Exception("Couldn't find window") : proc[0].MainWindowHandle;
         }
-
+        
         public static void SendInput(IntPtr window, byte key, int timeout = 100)
         {
             SetForegroundWindow(window);
