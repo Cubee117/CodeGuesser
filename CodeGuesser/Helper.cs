@@ -28,7 +28,7 @@ namespace CodeGuesser
 
         public static IntPtr GetWindow(string procName)
         {
-            var proc = Process.GetProcessesByName("procName");
+            var proc = Process.GetProcessesByName(procName);
             return proc.Length == 0 ? throw new Exception("Couldn't find window") : proc[0].MainWindowHandle;
         }
     }
