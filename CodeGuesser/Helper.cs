@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -22,7 +23,13 @@ namespace CodeGuesser
         public static List<string> LoadFile(string fileLocation)
         {
             // False:True
-            return string.IsNullOrEmpty(fileLocation) ? new List<string>(){"No file path given"} : File.ReadAllLines(fileLocation).ToList();
+            return string.IsNullOrEmpty(fileLocation) ? throw new Exception("Could not find file") : File.ReadAllLines(fileLocation).ToList();
+        }
+
+        public static IntPtr GetWindow(string procName)
+        {
+            var proc = Process.GetProcessesByName("procName");
+            return proc.Length == 0 ? throw new Exception("Couldn't find window") : proc[0].MainWindowHandle;
         }
     }
 }
