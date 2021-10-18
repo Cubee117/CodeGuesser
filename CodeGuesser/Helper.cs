@@ -26,9 +26,10 @@ namespace CodeGuesser
                       |___/" + Environment.NewLine;
             Console.Title = "Rust code guesser - Cube#9709";
             Console.WriteLine(banner);
+            Console.WriteLine("Type 'help' for a list of commands!\n");
         }
 
-        public static List<string> LoadFile(string fileLocation)
+        public static IEnumerable<string> LoadFile(string fileLocation)
         {
             // False:True
             return string.IsNullOrEmpty(fileLocation) ? throw new Exception("Could not find file") : File.ReadAllLines(fileLocation).ToList();
