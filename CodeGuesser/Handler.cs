@@ -8,22 +8,31 @@ namespace CodeGuesser
     {
         public static void Process(string cmd)
         {
-            const string helpMessage = "help - Shows this message\nloadfile <string filePath> - Loads file <filePath>";
+            const string helpMessage = "help - shows this message" +
+                                       "\nstart - starts guessing code" +
+                                       "\nstop - stops guessing code" +
+                                       "\nsetting <string setting, string[] args> - changes <setting> to value <args>";
             
             //TODO: Add command aliases 
             var commands = new Dictionary<string, Action<string[]>>()
             {
-                ["loadfile"] = delegate(string[] strings)
+                ["help"] = delegate(string[] strings) { Helper.Log(helpMessage, Helper.LogType.Info); },
+                ["start"] = delegate(string[] strings) { Helper.StartProcess.Start(); },
+                ["stop"] = delegate(string[] strings) { Helper.StartProcess.Abort(); },
+                ["setting"] = delegate(string[] strings)
                 {
+                    //TODO: provide a list of available arguments
                     if (strings.Length < 2) { Helper.Log("Not enough arguments!", Helper.LogType.Error); return; }
-                    foreach (var character in Helper.LoadFile(strings[1]).SelectMany(code => code))
+                    var setting = strings[1];
+                    switch (setting)
                     {
-                        Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
+                        case "path":
+                            Helper.FileLocation = strings[2];
+                            return;
+                        case "timeout":
+                            Helper.Timeout = int.Parse(strings[2]);
+                            return;
                     }
-                },
-                ["help"] = delegate(string[] strings)
-                {
-                    Helper.Log(helpMessage, Helper.LogType.Info);
                 }
             };
             var args = cmd.Split(' ');
