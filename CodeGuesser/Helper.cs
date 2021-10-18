@@ -24,7 +24,8 @@ namespace CodeGuesser
             Message,
             Error,
             Warning,
-            Info
+            Info,
+            Success
         }
         
         public static readonly Thread StartProcess = new Thread(() =>
@@ -64,6 +65,7 @@ namespace CodeGuesser
         
         public static void SendInput(IntPtr window, byte key, int timeout = 100)
         {
+            // 0x0D (enter)
             Thread.Sleep(timeout);
             keybd_event(key, 0, 0, IntPtr.Zero);
             keybd_event(key, 0, 0x0002, IntPtr.Zero);
@@ -89,6 +91,11 @@ namespace CodeGuesser
                     break;
                 case LogType.Info:
                     Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(text);
+                    Console.ResetColor();
+                    break;
+                case LogType.Success:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(text);
                     Console.ResetColor();
                     break;

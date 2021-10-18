@@ -21,16 +21,24 @@ namespace CodeGuesser
                 ["stop"] = delegate(string[] strings) { Helper.StartProcess.Abort(); },
                 ["setting"] = delegate(string[] strings)
                 {
-                    //TODO: provide a list of available arguments
-                    if (strings.Length < 2) { Helper.Log("Not enough arguments!", Helper.LogType.Error); return; }
+                    if (strings.Length < 2)
+                    {
+                        Helper.Log("Not enough arguments!", Helper.LogType.Error); 
+                        Helper.Log("List of settings: " +
+                                   "\npath <string> - changes the file path that is loaded" +
+                                   "\ntimeout <int> - changes how long to wait before typing a character", Helper.LogType.Info); 
+                        return;
+                    }
                     var setting = strings[1];
                     switch (setting)
                     {
                         case "path":
                             Helper.FileLocation = strings[2];
+                            Helper.Log($"Successfully changed file path to: {strings[2]}", Helper.LogType.Success);
                             return;
                         case "timeout":
                             Helper.Timeout = int.Parse(strings[2]);
+                            Helper.Log($"Successfully changed timeout to: {strings[2]} milliseconds", Helper.LogType.Success);
                             return;
                     }
                 }
