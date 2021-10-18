@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CodeGuesser
 {
@@ -7,16 +8,14 @@ namespace CodeGuesser
     {
         public static void Main(string[] args)
         {
+            // TODO: Make it detect once the player has died 
             if (args.Length > 0)
             {
                 Console.WriteLine("Loaded file: {0}", args[0]);
                 Helper.SetForegroundWindow(Helper.GetWindow("RustClient"));
-                foreach (var code in Helper.LoadFile(args[0]))
+                foreach (var character in Helper.LoadFile(args[0]).SelectMany(code => code))
                 {
-                    foreach (var character in code)
-                    {
-                        Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
-                    }
+                    Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
                 }
                 return;
             }
@@ -28,12 +27,9 @@ namespace CodeGuesser
                 var input = Console.ReadLine();
                 var data = Helper.LoadFile(input);
                 Helper.SetForegroundWindow(Helper.GetWindow("RustClient"));
-                foreach (var code in data)
+                foreach (var character in Helper.LoadFile(args[0]).SelectMany(code => code))
                 {
-                    foreach (var character in code)
-                    {
-                        Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
-                    }
+                    Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
                 }
             }
         }
