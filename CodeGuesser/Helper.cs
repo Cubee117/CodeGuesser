@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace CodeGuesser
 {
-    public class Helper
+    public static class Helper
     {
+        [DllImport("user32.dll")]
+        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
+        
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        
         public static void Startup()
         {
             const string banner = @"
@@ -31,5 +39,14 @@ namespace CodeGuesser
             var proc = Process.GetProcessesByName(procName);
             return proc.Length == 0 ? throw new Exception("Couldn't find window") : proc[0].MainWindowHandle;
         }
+
+        public static void SendInput(IntPtr window, byte key, int timeout = 100)
+        {
+            SetForegroundWindow(window);
+            Thread.Sleep(timeout);
+            keybd_event(key, 0, 0, IntPtr.Zero);
+            keybd_event(key, 0, 0x0002, IntPtr.Zero);
+        }
+        
     }
 }
