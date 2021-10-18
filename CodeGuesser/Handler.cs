@@ -8,15 +8,22 @@ namespace CodeGuesser
     {
         public static void Process(string cmd)
         {
+            const string helpMessage = "help - Shows this message\nloadfile <string filePath> - Loads file <filePath>";
+            
+            //TODO: Add command aliases 
             var commands = new Dictionary<string, Action<string[]>>()
             {
                 ["loadfile"] = delegate(string[] strings)
                 {
-                    if (strings.Length < 2) { Console.WriteLine("Not enough arguments!"); return; }
+                    if (strings.Length < 2) { Helper.Log("Not enough arguments!", Helper.LogType.Error); return; }
                     foreach (var character in Helper.LoadFile(strings[1]).SelectMany(code => code))
                     {
                         Helper.SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), 700);
                     }
+                },
+                ["help"] = delegate(string[] strings)
+                {
+                    Helper.Log(helpMessage, Helper.LogType.Info);
                 }
             };
             var args = cmd.Split(' ');
