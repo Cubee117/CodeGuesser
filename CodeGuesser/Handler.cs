@@ -40,6 +40,10 @@ namespace CodeGuesser
                             Helper.Timeout = int.Parse(strings[2]);
                             Helper.Log($"Successfully changed timeout to: {strings[2]} milliseconds", Helper.LogType.Success);
                             return;
+                        case "startdelay":
+                            Helper.StartDelay = int.Parse(strings[2]);
+                            Helper.Log($"Successfully changed start delay to: {strings[2]} milliseconds", Helper.LogType.Success);
+                            return;
                     }
                 }
             };
