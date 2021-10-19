@@ -26,7 +26,8 @@ namespace CodeGuesser
                         Helper.Log("Not enough arguments!", Helper.LogType.Error); 
                         Helper.Log("List of settings: " +
                                    "\npath <string> - changes the file path that is loaded" +
-                                   "\ntimeout <int> - changes how long to wait before typing a character", Helper.LogType.Info); 
+                                   "\ntimeout <int> - changes how long to wait before typing a character" +
+                                   "\nstartdelay <int> - changes the delay before starting", Helper.LogType.Info); 
                         return;
                     }
                     var setting = strings[1];
