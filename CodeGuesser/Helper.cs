@@ -18,6 +18,7 @@ namespace CodeGuesser
 
         public static string FileLocation;
         public static int Timeout = 700;
+        public static int StartDelay = 1000;
         
         //TODO: Cleanup
         public enum LogType
@@ -32,10 +33,11 @@ namespace CodeGuesser
         public static readonly Thread StartProcess = new Thread(() =>
         {
             if (string.IsNullOrEmpty(FileLocation)) { Log("Invalid file location", LogType.Error); };
-            Helper.SetForegroundWindow(Helper.GetWindow("notepad"));
+            Helper.SetForegroundWindow(Helper.GetWindow("RustClient"));
+            Thread.Sleep(StartDelay);
             foreach (var character in LoadFile(FileLocation).SelectMany(code => code))
             {
-                SendInput(Helper.GetWindow("notepad"), Convert.ToByte(character), Timeout);
+                SendInput(Helper.GetWindow("RustClient"), Convert.ToByte(character), Timeout);
             }
         });
         
